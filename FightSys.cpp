@@ -6,7 +6,7 @@ using namespace std;
 int FightSys::Fight(Player *Attacker, Player *Target)
 {
     char line[50];
-    int EffectiveAttack = Attacker->attack - Target->defense;
+    int EffectiveAttack = Attacker->attack - Target->defense; // Calculate effective attack.
 
     while (Target->health > 0)
     {
@@ -16,7 +16,7 @@ int FightSys::Fight(Player *Attacker, Player *Target)
             DisplayFightMenu();
 
             int choice;
-            cout << ">> "; // Sharp brackets indicate that the user should type something.
+            cout << ">> ";
             fgets(line, sizeof(line), stdin);
             sscanf(line, "%d", &choice);
 
@@ -24,6 +24,10 @@ int FightSys::Fight(Player *Attacker, Player *Target)
             {
             case 1:
                 Target->health = Target->health - EffectiveAttack;
+                if (Target->health < 0)
+                {
+                    Target->health = 0;
+                }
                 cout << Attacker->name << " inflicted " << EffectiveAttack << " damage to " << Target->name << endl;
                 Player::DisplayStats(Target);
                 break;
@@ -37,8 +41,11 @@ int FightSys::Fight(Player *Attacker, Player *Target)
         }
         else
         {
-            // Autopilot. Userless player acts independently.
             Target->health = Target->health - EffectiveAttack;
+            if (Target->health < 0)
+            {
+                Target->health = 0;
+            }
             cout << Attacker->name << " inflicted " << EffectiveAttack << " damage to " << Target->name << endl;
             Player::DisplayStats(Target);
         }

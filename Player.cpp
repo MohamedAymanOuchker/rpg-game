@@ -4,7 +4,6 @@
 
 Player::Player(int classP, std::string name)
 {
-    // Assign name.
     SetName(name);
 
     // Assign stats based on the given class.
@@ -53,6 +52,16 @@ Player::Player(int classP, std::string name)
     ++PlayersCreated;
 }
 
+Hero::Hero(int classP, std::string name) : Player(classP, name)
+{
+    Player(classP, name);
+}
+
+Villain::Villain(int classP, std::string name) : Player(classP, name)
+{
+    Player(classP, name);
+}
+
 void Player::DisplayStats(Player *target)
 {
     std::cout << "Name: " << target->name << std::endl;
@@ -63,4 +72,9 @@ void Player::DisplayStats(Player *target)
 void Player::SetName(std::string name)
 {
     this->name = name;
+}
+
+void Player::SetAutoPilot(bool autoPilot)
+{
+    this->autoPilot = autoPilot;
 }
